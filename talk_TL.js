@@ -1,4 +1,4 @@
-/********************************
+/**************************************
  *
  *
  * twitterTLを検索してリアルタイム音声
@@ -15,22 +15,20 @@ var tw = new twitter({
   access_token_secret:'4Yr6dcxlMaZdGEqU2M7Nicc0DkTy4udlvXMwxQu47eZm0'
 });
 
-tw.stream('statuses/filter',{'track':'#ttl'}, function(stream){
-  stream.on('data',function(data){
-    //console.log(data);
-    console.log(data.text);
-    content = '"'+String(data.text)+'"';
-    exe(content);
-  });
-});
+tw.stream('statuses/filter',
+    {'track':'#ttl'}, //検索語句
+    function(stream){
+      stream.on('data',function(data){
+      //console.log(data);
+      console.log(data.text);
+      content = '"'+String(data.text)+'"';
+      exe(content);
+      });
+    });
 
 var exe = function (content){
     var cmd = "say "+content
-    //var cmd = "----";
     exec(cmd, {timeout: 1000}, function (error, stdout, stderr) {
-//           if (error !== null) {
-//              return console.log('exec error: ' + error);
-//           } 
            console.log(stdout);
      });
 }
